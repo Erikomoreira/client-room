@@ -1,9 +1,9 @@
-import { RoomService } from './../room.service';
-import { RoomDetailsComponent } from './../room-details/room-details.component';
-import { Component, OnInit } from '@angular/core';
+import { RoomDetailsComponent } from 'src/app/room-details/room-details.component';
 import { Observable } from "rxjs";
+import { RoomService } from "../room.service";
 import { Room } from "../room";
-import { Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-room-list',
@@ -14,29 +14,28 @@ export class RoomListComponent implements OnInit {
   rooms: Observable<Room[]>;
   
   constructor(private roomService: RoomService,
-    private router: Router) { }
+    private router: Router) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.reloadData();
   }
 
-  reloadData(){
-    this.rooms = this.roomService.getRoomList();
+  reloadData() {
+    this.rooms = this.roomService.getRoomsList();
   }
 
-  deleteRoom(id: number){
+  deleteRoom(id: number) {
     this.roomService.deleteRoom(id)
-    .subscribe(
-      data =>{
-        console.log(data)
-        this.reloadData();
-      },
-      error => console.log(error)
-    );
+      .subscribe(
+        data => {
+          console.log(data);
+          this.reloadData();
+        },
+        error => console.log(error));
   }
 
   roomDetails(id: number){
-    this.router.navigate(['details', id]);    
+    this.router.navigate(['details', id]);
   }
 
   updateRoom(id: number){
